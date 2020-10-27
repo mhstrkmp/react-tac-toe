@@ -3,19 +3,21 @@ import React, { useState } from "react";
 import Square from "./Square";
 
 export default function Board() {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
+
+  function handleClick(i) {
+    const newSquares = squares.slice();
+    newSquares[i] = xIsNext ? "X" : "0";
+    setSquares(newSquares);
+    setXIsNext(!xIsNext);
+  }
+
   function renderSquare(i) {
-    const [squares, setSquares] = useState(Array(9).fill(null));
-
-    function handleClick(i) {
-      const newSquares = squares.slice();
-      newSquares[i] = "X";
-      setSquares(newSquares);
-    }
-
     return <Square value={squares[i]} onClick={() => handleClick(i)} />;
   }
 
-  const status = "Next player: X";
+  const status = "Next player: " + (xIsNext ? "X" : "0");
 
   return (
     <div>
